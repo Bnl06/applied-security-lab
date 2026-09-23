@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+.node_modules.lock
+
+# Build output
+dist/
+.vercel/
+.tanstack/
+
+# Environment variables (secrets)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Generated preview screenshots (keep folder structure)
+screenshots/*
+!screenshots/.gitkeep
+
+# Generated artifacts
+artifacts/
+
+# Temp files
+/tmp/
