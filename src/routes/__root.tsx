@@ -5,6 +5,17 @@ import { AppShell } from "@/components/layout/app-shell";
 import appCss from "../styles.css?url";
 
 const APP_NAME = "PERIMETER";
+const BASE = import.meta.env.BASE_URL;
+
+function AppContent() {
+  return (
+    <AuthProvider>
+      <AppShell>
+        <Outlet />
+      </AppShell>
+    </AuthProvider>
+  );
+}
 
 export const Route = createRootRoute({
   head: () => ({
@@ -20,10 +31,10 @@ export const Route = createRootRoute({
       { name: "theme-color", content: "#0a0a0b" },
     ],
     links: [
-      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "icon", type: "image/svg+xml", href: `${BASE}favicon.svg` },
       { rel: "stylesheet", href: appCss },
-      { rel: "manifest", href: "/__grok/manifest.webmanifest" },
-      { rel: "apple-touch-icon", href: "/__grok/icon-180.png" },
+      { rel: "manifest", href: `${BASE}__grok/manifest.webmanifest` },
+      { rel: "apple-touch-icon", href: `${BASE}__grok/icon-180.png` },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap",
@@ -39,20 +50,19 @@ export const Route = createRootRoute({
       </Link>
     </main>
   ),
-  component: () => (
-    <html lang="nl" className="antialiased" suppressHydrationWarning>
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <PreviewHostBridge />
-        <AuthProvider>
-          <AppShell>
-            <Outlet />
-          </AppShell>
-        </AuthProvider>
-        <Scripts />
-      </body>
-    </html>
-  ),
+  component: () =>
+    import.meta.env.SSR ? (
+      <html lang="nl" className="antialiased" suppressHydrationWarning>
+        <head>
+          <HeadContent />
+        </head>
+        <body>
+          <PreviewHostBridge />
+          <AppContent />
+          <Scripts />
+        </body>
+      </html>
+    ) : (
+      <AppContent />
+    ),
 });

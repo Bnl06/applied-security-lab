@@ -62,12 +62,33 @@ public/             Static assets
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Start dev server on port 8080 |
-| `npm run build` | Production build + DB migration |
+| `npm run build` | Production build (SSR + Nitro, for Vercel) |
+| `npm run build:pages` | SPA build for GitHub Pages (outputs to `dist/`) |
 | `npm run preview` | Preview production build |
 | `npm run typecheck` | TypeScript type checking |
 | `npm run test` | Run test suite |
 | `npm run lint` | ESLint |
 | `npm run format` | Prettier formatting |
+
+## GitHub Pages deployment
+
+This repo includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically builds and deploys to GitHub Pages on every push to `main`.
+
+To enable it:
+
+1. Go to **Settings > Pages** on the GitHub repo
+2. Under **Source**, select **GitHub Actions**
+3. Push to `main` — the workflow builds the SPA and deploys it
+
+The site will be live at `https://<username>.github.io/applied-security-lab/`.
+
+To build locally for GitHub Pages:
+
+```bash
+VITE_AUTH_ENABLED=false VITE_PAGES_BASE="/applied-security-lab/" npm run build:pages
+```
+
+The `dist/` folder is ready to serve on any static host.
 
 ## License
 
